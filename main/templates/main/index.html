@@ -1,0 +1,81 @@
+{% extends "main/base.html" %}
+
+{% block 'main' %}
+<div class="container pt-5">
+    <h1>Услуги автосервиса</h1>
+    <div class="btn-group py-3" role="group" aria-label="Basic outlined example">
+        {% if cat == 0 %}
+        <button class="btn btn-outline-primary active">Все</button>
+        {% else %}
+        <a href="/" class="btn btn-outline-primary">Все</a>
+        {% endif %}
+
+        {% for category in categories %}
+        {% if cat == category.id %}
+        <button class="btn btn-outline-primary active">{{category.name}}</button>
+        {% else %}
+        <a href="?cat={{category.id}}" type="button" class="btn btn-outline-primary">{{category.name}}</a>
+        {% endif %}
+        {% endfor %}
+
+      </div>
+    <div class="service-card-grid">
+        {% for service in services %}
+        <div class="card">
+            <img class="card-img-top" src="/media/{{service.cover}}">
+            <div class="card-body">
+                <h5 class="card-title">{{service.name}}</h5>
+                <div class="container">
+                    <div class="row">
+                        <button type="button" class="btn btn-outline-info col me-1" data-bs-toggle="modal"
+                            data-bs-target="#info{{service.id}}">
+                            <div class="d-flex align-items-center justify-content-center">
+                                Информация
+                                <span class="material-icons">
+                                    help_outline
+                                </span>
+                            </div>
+                        </button>
+                        <a href="/" class="btn btn-outline-primary col ms-1">
+                            <div class="d-flex align-items-center justify-content-center">
+                                Записаться
+                                <span class="material-icons">
+                                    navigate_next
+                                </span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="info{{service.id}}"
+                data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Информация</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            {{service.description}}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                            <a href="/" class="btn btn-outline-primary col ms-1">
+                                <div class="d-flex align-items-center justify-content-center">
+                                    Записаться
+                                    <span class="material-icons">
+                                        navigate_next
+                                    </span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal -->
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BMW Сервис</title>
+  <link href="/media/bootstrap/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<body>
+  <div class="container-fluid header d-flex justify-content-between">
+    <div class="d-flex align-items-center">
+      <img class="header__bmw-logo" src="/media/bmw.svg" alt="Логотип БМВ">
+      <h1>
+        Автосервис BMW
+      </h1>
+    </div>
+    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Запись
+      на сервис</button>
+  </div>
+  <!-- Modal -->
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Запись на сервис</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <select class="form-select" aria-label="Default select example">
+            <option selected>Выбор</option>
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+          </select>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+          <button type="button" class="btn btn-primary">Записаться</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% block 'main' %}
+
+  {% endblock %}
+</body>
+
+<style>
+  .header {
+    background-color: #e0cffc;
+    padding: 12px 16px;
+    user-select: none;
+  }
+
+  .header h1 {
+    margin: 0;
+    font-size: 32px;
+
+  }
+
+  .header__bmw-logo {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+  }
+
+  .service-card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 16px;
+  }
+
+  .card {
+    cursor: pointer;
+  }
+
+  .card:hover {
+    background-color: rgba(0, 234, 255, 0.222);
+  }
+
+  .card-img-top {
+    max-height: 250px;
+    object-fit: cover;
+  }
+</style>
+
+<script>
+console.log('{{uuid|escapejs}}')
+</script>
+
+</html>
