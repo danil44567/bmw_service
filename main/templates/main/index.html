@@ -82,6 +82,8 @@
     </div>
     <!-- УСЛУГИ -->
 
+    <!-- АКЦИИ -->
+    {% if promo %}
     <div class="d-flex justify-content-between pt-5 pb-2">
         <h2>Наши акции</h2>
         <a href="{% url 'promo' %}" class="btn btn-outline-warning d-flex align-items-center justify-content-center">
@@ -108,6 +110,7 @@
             </div>
         </div>
     </div>
-
+    {% endif %}
+    <!-- АКЦИИ -->
 </div>
 {% endblock %}
