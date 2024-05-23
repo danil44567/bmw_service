@@ -1,7 +1,25 @@
 {% extends "main/base.html" %}
 
+{% block 'head' %}
+<link rel="stylesheet" href="/media/css/promo.css">
+{% endblock %}
+
 {% block 'main' %}
-<div>
-    {{promo.name}}
+<div class="container py-5">
+    <a href="{% url 'promo' %}" class="btn btn-outline-warning">
+        <div class="d-flex align-items-center justify-content-center">
+            Все акции
+            <span class="material-icons px-1">
+                discount
+            </span>
+        </div>
+    </a>
+    <h2>{{promo.name}}</h2>
+    <img class="promo__image" src="/media/{{promo.cover}}" alt="Обложка акции">
+    <div>
+        {% autoescape off %}
+        {{promo.description}}
+        {% endautoescape %}
+    </div>
 </div>
 {% endblock %}
