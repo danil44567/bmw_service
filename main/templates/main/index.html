@@ -82,7 +82,7 @@
     </div>
     <!-- УСЛУГИ -->
 
-    <div class="d-flex justify-content-between pt-5">
+    <div class="d-flex justify-content-between pt-5 pb-2">
         <h2>Наши акции</h2>
         <a href="{% url 'promo' %}" class="btn btn-outline-warning d-flex align-items-center justify-content-center">
             Все акции
@@ -91,13 +91,13 @@
             </span>
         </a>
     </div>
-    <div class="promo">
-        <img src="/media/{{promo.cover}}"
+    <div class="promo row">
+        <img class="col-md-8 col-12" src="/media/{{promo.cover}}"
             alt="Обложка акции">
-        <div class="promo__body">
-            <h3 class="fs-1 text">{{promo.name}}</h3>
+        <div class="promo__body col-md-4 col-12">
+            <h3>{{promo.name}}</h3>
             <div>
-                <a href="{% url 'promo_info' promo.id %}" class="btn btn-outline-warning btn-lg">
+                <a href="{% url 'promo_info' promo.id %}" class="btn btn-outline-warning">
                     <div class="d-flex align-items-center justify-content-center">
                         Подробнее
                         <span class="material-icons">
