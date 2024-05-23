@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from . import models
 
@@ -15,4 +15,17 @@ def index(request):
         'services': services,
         'categories': category,
         'cat': select_category,
+        'promo': models.Promo.objects.last()
+    })
+
+
+def promo(request):
+    return render(request, 'main/promo.html', {
+        'promos': models.Promo.objects.all()
+    })
+    
+def promo_info(request, promo_id):
+    promo = get_object_or_404(models.Promo, pk=promo_id)
+    return render(request, 'main/promo_info.html', {
+        'promo': promo
     })

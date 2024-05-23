@@ -1,7 +1,8 @@
 {% extends "main/base.html" %}
 
 {% block 'main' %}
-<div class="container pt-5">
+<div class="container py-5">
+    <!-- УСЛУГИ -->
     <h1>Услуги автосервиса</h1>
     <div class="btn-group py-3" role="group" aria-label="Basic outlined example">
         {% if cat == 0 %}
@@ -18,8 +19,8 @@
         {% endif %}
         {% endfor %}
 
-      </div>
-    <div class="service-card-grid">
+    </div>
+    <div class="my-grid">
         {% for service in services %}
         <div class="card">
             <img class="card-img-top" src="/media/{{service.cover}}">
@@ -48,8 +49,8 @@
                 </div>
             </div>
             <!-- Modal -->
-            <div class="modal fade" id="info{{service.id}}"
-                data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal fade" id="info{{service.id}}" data-bs-keyboard="false" tabindex="-1"
+                aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -57,7 +58,9 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
+                            {% autoescape off %}
                             {{service.description}}
+                            {% endautoescape %}
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
@@ -77,5 +80,34 @@
         </div>
         {% endfor %}
     </div>
+    <!-- УСЛУГИ -->
+
+    <div class="d-flex justify-content-between pt-5">
+        <h2>Наши акции</h2>
+        <a href="{% url 'promo' %}" class="btn btn-outline-warning d-flex align-items-center justify-content-center">
+            Все акции
+            <span class="material-icons px-1">
+                discount
+            </span>
+        </a>
+    </div>
+    <div class="promo">
+        <img src="/media/{{promo.cover}}"
+            alt="Обложка акции">
+        <div class="promo__body">
+            <h3 class="fs-1 text">{{promo.name}}</h3>
+            <div>
+                <a href="{% url 'promo_info' promo.id %}" class="btn btn-outline-warning btn-lg">
+                    <div class="d-flex align-items-center justify-content-center">
+                        Подробнее
+                        <span class="material-icons">
+                            navigate_next
+                        </span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
 </div>
 {% endblock %}

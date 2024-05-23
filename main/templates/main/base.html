@@ -72,7 +72,7 @@
     margin-right: 10px;
   }
 
-  .service-card-grid {
+  .my-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     column-gap: 16px;
@@ -90,10 +90,22 @@
     max-height: 250px;
     object-fit: cover;
   }
+
+  .promo {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+  }
+
+  .promo__body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
 </style>
 
 <script>
-console.log('{{uuid|escapejs}}')
+  console.log('{{uuid|escapejs}}')
 </script>
 
 </html>
