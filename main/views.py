@@ -1,6 +1,8 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
+from django.urls import reverse
 from . import models
+import json
 
 
 def index(request):
@@ -29,3 +31,33 @@ def promo_info(request, promo_id):
     return render(request, 'main/promo_info.html', {
         'promo': promo
     })
+
+
+def request(request):
+    if request.method == "GET":
+        services = models.Service.objects.all()
+        return render(request, 'main/request.html', {
+            'services': services,
+        })
+    elif request.method == "POST":
+        print(request.POST)
+        return HttpResponseRedirect(reverse("request"))
+
+
+def service_info(request):
+    if request.method == "GET":
+        services = models.Service.objects.all()
+        return render(request, 'main/request.html', {
+            'services': services,
+        })
+    elif request.method == "POST":
+        ids = request.POST.getlist('serviceIds')
+        result = []
+        for id in ids:
+            service = models.Service.objects.filter(id=id).first()
+            result.append({
+                'id': service.id,
+                'name': service.name
+            })
+
+        return HttpResponse(json.dumps(result), content_type='application/json')

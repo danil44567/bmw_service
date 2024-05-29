@@ -1,0 +1,104 @@
+{% extends "main/base.html" %}
+
+{% block 'head' %}
+<link rel="stylesheet" href="/media/css/request.css">
+
+{% endblock %}
+
+{% block 'main' %}
+<div class="container py-5">
+    <h2>Запись на сервис</h2>
+    <form action="{% url 'request' %}" method="post">
+        {% csrf_token %}
+        <h5>Контакты</h5>
+        <div style="max-width: 300px;">
+            <label for="phone" class="form-label">Телефон</label>
+            <input type="phone" class="form-control" id="phone" aria-describedby="phoneHelp" maxlength="20">
+            <div id="phoneHelp" class="form-text">Номер телефона необходим для дальнейшей связи с вами</div>
+        </div>
+        <h5>Выбранные услуги</h5>
+        <div class="services" id="selected-services">
+            <input type="checkbox" checked id="1234" name="services" value="1234" />
+            <label for="1234">6</label>
+        </div>
+
+        <button type="submit" class="btn mt-3 btn-primary">
+            <div class="d-flex align-items-center justify-content-center">
+                Отправить
+                <span class="material-icons" style="margin-left: 5px;">
+                    send
+                </span>
+            </div>
+        </button>
+    </form>
+</div>
+{% endblock %}
+
+{% block 'script' %}
+<script>
+    const servicesParent = document.getElementById("selected-services");
+    let currentServices = []
+
+    let cart = JSON.parse(localStorage.getItem('cart')) || []
+
+    const request = new XMLHttpRequest();
+    request.open('POST', "{% url 'service-info' %}");
+
+    const header = "X-CSRFToken";
+    const token = document.cookie.replace('csrftoken=', '');
+    request.setRequestHeader(header, token);
+
+    const data = new FormData();
+    for (const id of cart) {
+        data.append('serviceIds', id)
+    }
+    request.send(data);
+
+    request.onload = () => {
+        const response = JSON.parse(request.responseText)
+        currentServices = response
+        updateServices()
+    }
+
+    function updateServices() {
+        servicesParent.innerHTML = ''
+        if (currentServices.length) {
+            for (const service of currentServices) {
+                const el = document.createElement("div");
+                el.innerHTML =
+                    `
+                <input type="checkbox" onclick="removeItem(${service.id})" class="d-none" checked id="${service.id}" name="services" value="${service.id}" />
+                <label class="pt-2">${service.name}</label>
+                <label class="btn btn-danger p-1" for="${service.id}">
+                    <div class="d-flex align-items-center justify-content-center">
+                        Убрать
+                        <span class="material-icons">
+                            delete
+                        </span>
+                    </div>
+                </label>
+                `
+                servicesParent.appendChild(el)
+            }
+
+        }
+        else {
+            const el = document.createElement("div");
+            el.innerHTML =
+                `
+                Нет выбранных услуг
+                `
+            servicesParent.appendChild(el)
+        }
+    }
+
+    function removeItem(id) {
+        console.log(id)
+        currentServices.splice(currentServices.findIndex(s => +s.id === +id), 1)
+        cart.splice(cart.indexOf(+id), 1)
+        localStorage.setItem('cart', JSON.stringify(cart))
+        updateServices()
+    }
+
+</script>
+{% endblock %}

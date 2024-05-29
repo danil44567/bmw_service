@@ -37,14 +37,15 @@
                                 </span>
                             </div>
                         </button>
-                        <a href="/" class="btn btn-outline-primary col ms-1">
+                        <button onclick="addCart(+'{{service.id}}')" class="btn btn-outline-primary col ms-1"
+                            data-bs-toggle="modal" data-bs-target="#addService{{service.id}}">
                             <div class="d-flex align-items-center justify-content-center">
                                 Записаться
                                 <span class="material-icons">
                                     navigate_next
                                 </span>
                             </div>
-                        </a>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -64,19 +65,43 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                            <a href="/" class="btn btn-outline-primary col ms-1">
+                            <button onclick="addCart(+'{{service.id}}')" data-bs-dismiss="modal"
+                                class="btn btn-outline-primary col ms-1" data-bs-toggle="modal"
+                                data-bs-target="#addService{{service.id}}">
                                 <div class="d-flex align-items-center justify-content-center">
                                     Записаться
                                     <span class="material-icons">
                                         navigate_next
                                     </span>
                                 </div>
-                            </a>
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
             <!-- Modal -->
+
+            <!-- AddModal -->
+            <div class="modal fade" id="addService{{service.id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Услуга добавлена</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            Выбранная услуга добавлена к списку услуг
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                            <button type="button" onclick="deleteCart(+'{{service.id}}')" class="btn btn-warning" data-bs-dismiss="modal">Отменить</button>
+                            <a href="{% url 'request' %}" class="btn btn-primary">Посмотреть</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- AddModal -->
         </div>
         {% endfor %}
     </div>
@@ -94,8 +119,7 @@
         </a>
     </div>
     <div class="promo row">
-        <img class="col-md-8 col-12" src="/media/{{promo.cover}}"
-            alt="Обложка акции">
+        <img class="col-md-8 col-12" src="/media/{{promo.cover}}" alt="Обложка акции">
         <div class="promo__body col-md-4 col-12">
             <h3>{{promo.name}}</h3>
             <div>
@@ -113,4 +137,24 @@
     {% endif %}
     <!-- АКЦИИ -->
 </div>
+{% endblock %}
+
+{% block 'script' %}
+<script>
+    let cart = JSON.parse(localStorage.getItem('cart')) || []
+    function addCart(id) {
+        if (cart.indexOf(id) === -1) {
+            cart.push(id)
+            localStorage.setItem('cart', JSON.stringify(cart))
+        }
+    }
+
+    function deleteCart(id) {
+        const index = cart.indexOf(id)
+        if (index !== -1) {
+            cart.splice(index, 1)
+            localStorage.setItem('cart', JSON.stringify(cart))
+        }
+    }
+</script>
 {% endblock %}
