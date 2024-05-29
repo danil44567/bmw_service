@@ -3,6 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from . import models
 import json
+from django.utils import timezone
 
 
 def index(request):
@@ -41,6 +42,14 @@ def request(request):
         })
     elif request.method == "POST":
         print(request.POST)
+        phone = request.POST.get('phone')
+        services_ids = request.POST.getlist('services')
+        request = models.Request(phone=phone, date=timezone.now())
+        request.save()
+        # models.Request.objects.create(phone=phone, date=timezone.now())
+        services = models.Service.objects.filter(id__in=services_ids)
+        request.services.set(services)
+        print(services)
         return HttpResponseRedirect(reverse("request"))
 
 

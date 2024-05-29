@@ -4,3 +4,4 @@ from .models import *
 admin.site.register(Service)
 admin.site.register(ServiceCategory)
 admin.site.register(Promo)
+admin.site.register(Request)
