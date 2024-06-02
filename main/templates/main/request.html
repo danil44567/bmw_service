@@ -2,40 +2,76 @@
 
 {% block 'head' %}
 <link rel="stylesheet" href="/media/css/request.css">
-
+<script src="https://unpkg.com/imask"></script>
 {% endblock %}
 
 {% block 'main' %}
 <div class="container py-5">
-    <h2>Запись на сервис</h2>
-    <form action="{% url 'request' %}" method="post">
+    <form class="request-form" action="{% url 'request' %}" method="post">
         {% csrf_token %}
+        <h2>Запись на сервис</h2>
         <h5>Контакты</h5>
-        <div style="max-width: 300px;">
+        <div>
             <label for="phone" class="form-label">Телефон</label>
-            <input type="phone" required name="phone" class="form-control" id="phone" aria-describedby="phoneHelp" maxlength="20">
+            <input type="phone" name="phone" class="form-control" id="phone" aria-describedby="phoneHelp" maxlength="20"
+                pattern="\+7\(\d{3}\)\d{3}-\d\d-\d\d" required>
             <div id="phoneHelp" class="form-text">Номер телефона необходим для дальнейшей связи с вами</div>
         </div>
-        <h5>Выбранные услуги</h5>
-        <div class="services" id="selected-services">
-            <input type="checkbox" checked id="1234" name="services" value="1234" />
-            <label for="1234">6</label>
+        <div>
+            <label for="name" class="form-label">Ваше имя</label>
+            <input type="name" required name="name" class="form-control" id="name" maxlength="20">
         </div>
+        <h5>Выбранные услуги</h5>
+        <div class="services list-group" id="selected-services">
 
-        <button type="submit" class="btn mt-3 btn-primary">
-            <div class="d-flex align-items-center justify-content-center">
-                Отправить
-                <span class="material-icons" style="margin-left: 5px;">
-                    send
-                </span>
-            </div>
-        </button>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn mt-3 btn-primary">
+                <div class="d-flex align-items-center justify-content-center">
+                    Отправить
+                    <span class="material-icons" style="margin-left: 5px;">
+                        send
+                    </span>
+                </div>
+            </button>
+        </div>
     </form>
 </div>
+{% if success %}
+<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="successModalLabel">Заявка отправлена</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Ваша заявка на сервис успешно отправлена, ожидайте когда с вами свяжутся.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
 {% endblock %}
 
 {% block 'script' %}
 <script>
+    // {% if success %}
+    window.addEventListener("load", (event) => {
+        const successModal = new bootstrap.Modal('#successModal')
+        successModal.show(document.getElementById('successModal'))
+    });
+    // {% endif %}
+    const element = document.getElementById('phone');
+    const maskOptions = {
+        mask: '+{7}(000)000-00-00',
+        lazy: false
+    };
+    const mask = IMask(element, maskOptions);
+
     const servicesParent = document.getElementById("selected-services");
     let currentServices = []
 
@@ -67,16 +103,20 @@
                 const el = document.createElement("div");
                 el.innerHTML =
                     `
-                <input type="checkbox" onclick="removeItem(${service.id})" class="d-none" checked id="${service.id}" name="services" value="${service.id}" />
-                <label class="pt-2">${service.name}</label>
-                <label class="btn btn-danger p-1" for="${service.id}">
-                    <div class="d-flex align-items-center justify-content-center">
-                        Убрать
-                        <span class="material-icons">
-                            delete
-                        </span>
+                <li class="service-item list-group-item p-0">
+                    <div class="service-item-body">
+                        <img src="/media/${service.cover}">
+                        <input type="checkbox" onclick="removeItem(${service.id})" class="d-none" checked id="${service.id}" name="services" value="${service.id}" />
+                        <label class="">${service.name}</label>
                     </div>
-                </label>
+                    <label class="service-item-delete btn btn-danger p-1" for="${service.id}">
+                        <div>
+                            <span class="material-icons">
+                                delete
+                            </span>
+                        </div>
+                    </label>
+                </li>
                 `
                 servicesParent.appendChild(el)
             }

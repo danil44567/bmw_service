@@ -40,6 +40,7 @@ class Promo(models.Model):
 
 class Request(models.Model):
     phone = models.CharField(max_length=20, blank=False, verbose_name="Телефон")
+    name = models.CharField(max_length=20, blank=False, verbose_name="Имя")
     date = models.DateTimeField(blank=False, verbose_name="Дата заявки")
     services = models.ManyToManyField(Service,blank=True, verbose_name="Услуги")
     class Meta:
@@ -47,4 +48,4 @@ class Request(models.Model):
         verbose_name_plural = u'Заявки'
 
     def __str__(self):
-        return self.phone
+        return f'{self.name} ({self.phone})'

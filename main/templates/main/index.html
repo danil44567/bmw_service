@@ -168,8 +168,11 @@
     function updateCard(id, isAdd) {
         const cardBtn = document.getElementById(`add-cart-btn-${id}`);
         const cardBtnModal = document.getElementById(`add-cart-btn-modal-${id}`);
+        if (!cardBtn || !cardBtnModal)
+            return
+
         if (isAdd) {
-            const selectedHtml =`<div class="d-flex align-items-center justify-content-center">
+            const selectedHtml = `<div class="d-flex align-items-center justify-content-center">
                                 Выбрано
                                 <span class="material-icons">
                                     done

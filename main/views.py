@@ -1,9 +1,10 @@
-from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render, get_object_or_404, redirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 from . import models
 import json
 from django.utils import timezone
+from django.forms.models import model_to_dict
 
 
 def index(request):
@@ -39,18 +40,18 @@ def request(request):
         services = models.Service.objects.all()
         return render(request, 'main/request.html', {
             'services': services,
+            'success': request.GET.get('message'),
         })
     elif request.method == "POST":
         print(request.POST)
         phone = request.POST.get('phone')
+        name = request.POST.get('name')
         services_ids = request.POST.getlist('services')
-        request = models.Request(phone=phone, date=timezone.now())
+        request = models.Request(phone=phone, name=name, date=timezone.now())
         request.save()
-        # models.Request.objects.create(phone=phone, date=timezone.now())
         services = models.Service.objects.filter(id__in=services_ids)
         request.services.set(services)
-        print(services)
-        return HttpResponseRedirect(reverse("request"))
+        return HttpResponseRedirect('/request?message=success')
 
 
 def service_info(request):
@@ -61,12 +62,12 @@ def service_info(request):
         })
     elif request.method == "POST":
         ids = request.POST.getlist('serviceIds')
+        services = models.Service.objects.filter(id__in=ids)
         result = []
-        for id in ids:
-            service = models.Service.objects.filter(id=id).first()
+        for service in services:
             result.append({
                 'id': service.id,
-                'name': service.name
+                'name': service.name,
+                'cover': str(service.cover),
             })
-
         return HttpResponse(json.dumps(result), content_type='application/json')
