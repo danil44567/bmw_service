@@ -24,7 +24,7 @@
         Автосервис BMW
       </h1>
     </a>
-    <a href="{% url 'request' %}" class="btn btn-outline-primary">Запись на сервис</a>
+    <a href="{% url 'request' %}" class="btn btn-outline-primary header__request">Запись на сервис</a>
   </div>
   {% block 'main' %}
 
@@ -65,6 +65,10 @@
     object-fit: cover;
   }
 
+  .card-actions {
+    gap: 6px;
+  }
+
   .promo img {
     object-fit: contain;
   }
@@ -100,6 +104,17 @@
       width: 30x;
       height: 30px;
       margin-right: 5px;
+    }
+
+    .header__request {
+      font-size: 14px;
+      padding: 3px 6px;
+    }
+  }
+
+  @media (max-width: 460px) {
+    .header h1 {
+      display: none;
     }
   }
 </style>

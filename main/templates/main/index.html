@@ -6,19 +6,33 @@
     <h1>Услуги автосервиса</h1>
     <div class="btn-group py-3" role="group" aria-label="Basic outlined example">
         {% if cat == 0 %}
-        <button class="btn btn-outline-primary active">Все</button>
+        <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            Категории услуг
+        </button>
         {% else %}
-        <a href="/" class="btn btn-outline-primary">Все</a>
-        {% endif %}
-
         {% for category in categories %}
         {% if cat == category.id %}
-        <button class="btn btn-outline-primary active">{{category.name}}</button>
-        {% else %}
-        <a href="?cat={{category.id}}" type="button" class="btn btn-outline-primary">{{category.name}}</a>
+        <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            {{category.name}}
+        </button>
         {% endif %}
         {% endfor %}
-
+        {% endif %}
+        <ul class="dropdown-menu">
+            {% if cat != 0 %}
+            <li><a class="dropdown-item" href="/">Все</a></li>
+            <li>
+                <hr class="dropdown-divider">
+            </li>
+            {% endif %}
+            {% for category in categories %}
+            {% if cat != category.id %}
+            <li><a class="dropdown-item" href="?cat={{category.id}}">{{category.name}}</a></li>
+            {% endif %}
+            {% endfor %}
+        </ul>
     </div>
     <div class="my-grid">
         {% for service in services %}
@@ -27,8 +41,8 @@
             <div class="card-body">
                 <h5 class="card-title">{{service.name}}</h5>
                 <div class="container">
-                    <div class="row">
-                        <button type="button" class="btn btn-outline-info col me-1" data-bs-toggle="modal"
+                    <div class="row card-actions">
+                        <button type="button" class="btn btn-outline-info col" data-bs-toggle="modal"
                             data-bs-target="#info{{service.id}}">
                             <div class="d-flex align-items-center justify-content-center">
                                 Информация
@@ -37,7 +51,7 @@
                                 </span>
                             </div>
                         </button>
-                        <button onclick="addCart(+'{{service.id}}')" class="btn btn-outline-primary col ms-1"
+                        <button onclick="addCart(+'{{service.id}}')" class="btn btn-outline-primary col"
                             id="add-cart-btn-{{service.id}}" data-bs-toggle="modal"
                             data-bs-target="#addService{{service.id}}">
                             <div class="d-flex align-items-center justify-content-center">
