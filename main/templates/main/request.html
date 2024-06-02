@@ -1,8 +1,9 @@
 {% extends "main/base.html" %}
+{% load static %}
 
 {% block 'head' %}
 <link rel="stylesheet" href="/media/css/request.css">
-<script src="https://unpkg.com/imask"></script>
+<script src="{%  static 'js/imask.js' %}"></script>
 {% endblock %}
 
 {% block 'main' %}
