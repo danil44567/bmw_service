@@ -38,7 +38,8 @@
                             </div>
                         </button>
                         <button onclick="addCart(+'{{service.id}}')" class="btn btn-outline-primary col ms-1"
-                            data-bs-toggle="modal" data-bs-target="#addService{{service.id}}">
+                            id="add-cart-btn-{{service.id}}" data-bs-toggle="modal"
+                            data-bs-target="#addService{{service.id}}">
                             <div class="d-flex align-items-center justify-content-center">
                                 Записаться
                                 <span class="material-icons">
@@ -67,7 +68,7 @@
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
                             <button onclick="addCart(+'{{service.id}}')" data-bs-dismiss="modal"
                                 class="btn btn-outline-primary col ms-1" data-bs-toggle="modal"
-                                data-bs-target="#addService{{service.id}}">
+                                data-bs-target="#addService{{service.id}}" id="add-cart-btn-modal-{{service.id}}">
                                 <div class="d-flex align-items-center justify-content-center">
                                     Записаться
                                     <span class="material-icons">
@@ -95,7 +96,8 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                            <button type="button" onclick="deleteCart(+'{{service.id}}')" class="btn btn-warning" data-bs-dismiss="modal">Отменить</button>
+                            <button type="button" onclick="deleteCart(+'{{service.id}}')" class="btn btn-warning"
+                                data-bs-dismiss="modal">Убрать</button>
                             <a href="{% url 'request' %}" class="btn btn-primary">Посмотреть</a>
                         </div>
                     </div>
@@ -142,9 +144,14 @@
 {% block 'script' %}
 <script>
     let cart = JSON.parse(localStorage.getItem('cart')) || []
+    for (const id of cart) {
+        updateCard(id, true)
+    }
+
     function addCart(id) {
         if (cart.indexOf(id) === -1) {
             cart.push(id)
+            updateCard(id, true)
             localStorage.setItem('cart', JSON.stringify(cart))
         }
     }
@@ -153,7 +160,37 @@
         const index = cart.indexOf(id)
         if (index !== -1) {
             cart.splice(index, 1)
+            updateCard(id, false)
             localStorage.setItem('cart', JSON.stringify(cart))
+        }
+    }
+
+    function updateCard(id, isAdd) {
+        const cardBtn = document.getElementById(`add-cart-btn-${id}`);
+        const cardBtnModal = document.getElementById(`add-cart-btn-modal-${id}`);
+        if (isAdd) {
+            const selectedHtml =`<div class="d-flex align-items-center justify-content-center">
+                                Выбрано
+                                <span class="material-icons">
+                                    done
+                                </span>
+                            </div>`
+            cardBtn.classList.replace('btn-outline-primary', 'btn-outline-success');
+            cardBtnModal.classList.replace('btn-outline-primary', 'btn-outline-success');
+            cardBtn.innerHTML = selectedHtml;
+            cardBtnModal.innerHTML = selectedHtml;
+        }
+        else {
+            const notSelectedHtml = `<div class="d-flex align-items-center justify-content-center">
+                                Записаться
+                                <span class="material-icons">
+                                    navigate_next
+                                </span>
+                            </div>`
+            cardBtn.classList.replace('btn-outline-success', 'btn-outline-primary');
+            cardBtnModal.classList.replace('btn-outline-success', 'btn-outline-primary');
+            cardBtn.innerHTML = notSelectedHtml;
+            cardBtnModal.innerHTML = notSelectedHtml;
         }
     }
 </script>
