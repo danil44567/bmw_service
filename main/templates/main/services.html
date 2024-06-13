@@ -5,7 +5,37 @@
 {% block 'main' %}
 <div class="container py-5">
     <!-- УСЛУГИ -->
-    <h1>Популярные услуги автосервиса</h1>
+    <h1>Услуги автосервиса</h1>
+    <div class="btn-group py-3" role="group" aria-label="Basic outlined example">
+        {% if cat == 0 %}
+        <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            Категории услуг
+        </button>
+        {% else %}
+        {% for category in categories %}
+        {% if cat == category.id %}
+        <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            {{category.name}}
+        </button>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+        <ul class="dropdown-menu">
+            {% if cat != 0 %}
+            <li><a class="dropdown-item" href="{% url 'services' %}">Все</a></li>
+            <li>
+                <hr class="dropdown-divider">
+            </li>
+            {% endif %}
+            {% for category in categories %}
+            {% if cat != category.id %}
+            <li><a class="dropdown-item" href="?cat={{category.id}}">{{category.name}}</a></li>
+            {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
     <div class="my-grid">
         {% for service in services %}
         <div class="card">
@@ -94,36 +124,6 @@
         {% endfor %}
     </div>
     <!-- УСЛУГИ -->
-
-    <!-- АКЦИИ -->
-    {% if promo %}
-    <div class="d-flex justify-content-between pt-5 pb-2">
-        <h2>Наши акции</h2>
-        <a href="{% url 'promo' %}" class="btn btn-outline-warning d-flex align-items-center justify-content-center">
-            Все акции
-            <span class="material-icons px-1">
-                discount
-            </span>
-        </a>
-    </div>
-    <div class="promo row">
-        <img class="col-md-8 col-12" src="/media/{{promo.cover}}" alt="Обложка акции">
-        <div class="promo__body col-md-4 col-12">
-            <h3>{{promo.name}}</h3>
-            <div>
-                <a href="{% url 'promo_info' promo.id %}" class="btn btn-outline-warning">
-                    <div class="d-flex align-items-center justify-content-center">
-                        Подробнее
-                        <span class="material-icons">
-                            navigate_next
-                        </span>
-                    </div>
-                </a>
-            </div>
-        </div>
-    </div>
-    {% endif %}
-    <!-- АКЦИИ -->
 </div>
 {% endblock %}
 
