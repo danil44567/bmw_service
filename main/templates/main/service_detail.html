@@ -1,0 +1,42 @@
+{% extends "main/base.html" %}
+
+{% block 'head' %}
+<link rel="stylesheet" href="/media/css/promo.css">
+{% endblock %}
+
+{% block 'main' %}
+<div class="container py-5">
+    <a href="{% url 'services' %}" class="btn btn-outline-primary">
+        <div class="d-flex align-items-center justify-content-center">
+            Все услуги
+            <span class="material-icons px-1">
+                directions_car
+            </span>
+        </div>
+    </a>
+    <h2>{{service.name}}</h2>
+    <img class="promo__image" src="/media/{{service.cover}}" alt="Обложка услуги">
+    <h5>Описание</h5>
+    <div>
+        {% autoescape off %}
+        {{service.description}}
+        {% endautoescape %}
+    </div>
+    <h5 class="pt-4">Детализация</h5>
+    <div>
+        {% autoescape off %}
+        {{service.detail}}
+        {% endautoescape %}
+    </div>
+    <div class="d-flex justify-content-center pt-5">
+        <a href="{{service.dealer}}" class="btn btn-outline-primary">
+            <div class="d-flex align-items-center justify-content-center">
+                Страница официального дилера
+                <span class="material-icons px-1">
+                thumb_up
+            </span>
+            </div>
+        </a>
+    </div>
+</div>
+{% endblock %}

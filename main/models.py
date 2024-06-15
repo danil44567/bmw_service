@@ -14,9 +14,11 @@ class ServiceCategory(models.Model):
 
 class Service(models.Model):
     name = models.CharField(max_length=255, blank=False, verbose_name="Имя услуги")
-    description = models.TextField(blank=True, verbose_name="Описание")
-    category = models.ForeignKey(ServiceCategory, on_delete=models.CASCADE)
-    cover = models.ImageField(upload_to='сovers/', blank=True, verbose_name="Обложка")
+    description = models.TextField(blank=False, verbose_name="Описание")
+    category = models.ForeignKey(ServiceCategory, on_delete=models.CASCADE, blank=False,)
+    cover = models.ImageField(upload_to='сovers/', blank=False, verbose_name="Обложка")
+    detail = models.TextField(blank=False, verbose_name="Детальное описание")
+    dealer = models.CharField(max_length=255, blank=False, verbose_name="Ссылка на дилера")
 
     class Meta:
         verbose_name = u'Услуга'

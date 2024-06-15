@@ -5,7 +5,20 @@
 {% block 'main' %}
 <div class="container py-5">
     <!-- УСЛУГИ -->
-    <h1>Популярные услуги автосервиса</h1>
+    <div class="d-flex justify-content-between align-items-center pb-2" style="flex-wrap: wrap;">
+        <h1>Популярные услуги автосервиса</h1>
+        <div>
+            <a href="{% url 'services' %}" class="btn btn-outline-primary">
+                <div class="d-flex align-items-center justify-content-center">
+                    Все услуги
+                    <span class="material-icons px-1">
+                directions_car
+            </span>
+                </div>
+            </a>
+        </div>
+
+    </div>
     <div class="my-grid">
         {% for service in services %}
         <div class="card">
@@ -23,7 +36,15 @@
                                 </span>
                             </div>
                         </button>
-                        <button onclick="addCart(+'{{service.id}}')" class="btn btn-outline-primary col"
+                        <a href="{% url 'service_detail' service.id %}" class="btn btn-outline-warning col">
+                            <div class="d-flex align-items-center justify-content-center">
+                                Детализация
+                                <span class="material-icons">
+                                    article
+                                </span>
+                            </div>
+                        </a>
+                        <button onclick="addCart(+'{{service.id}}')" class="btn btn-outline-primary col-12"
                             id="add-cart-btn-{{service.id}}" data-bs-toggle="modal"
                             data-bs-target="#addService{{service.id}}">
                             <div class="d-flex align-items-center justify-content-center">
@@ -38,7 +59,7 @@
             </div>
             <!-- Modal -->
             <div class="modal fade" id="info{{service.id}}" data-bs-keyboard="false" tabindex="-1"
-                aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                 aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -53,8 +74,8 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
                             <button onclick="addCart(+'{{service.id}}')" data-bs-dismiss="modal"
-                                class="btn btn-outline-primary col ms-1" data-bs-toggle="modal"
-                                data-bs-target="#addService{{service.id}}" id="add-cart-btn-modal-{{service.id}}">
+                                    class="btn btn-outline-primary col ms-1" data-bs-toggle="modal"
+                                    data-bs-target="#addService{{service.id}}" id="add-cart-btn-modal-{{service.id}}">
                                 <div class="d-flex align-items-center justify-content-center">
                                     Записаться
                                     <span class="material-icons">
@@ -70,7 +91,7 @@
 
             <!-- AddModal -->
             <div class="modal fade" id="addService{{service.id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
-                aria-hidden="true">
+                 aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -83,7 +104,8 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
                             <button type="button" onclick="deleteCart(+'{{service.id}}')" class="btn btn-warning"
-                                data-bs-dismiss="modal">Убрать</button>
+                                    data-bs-dismiss="modal">Убрать
+                            </button>
                             <a href="{% url 'request' %}" class="btn btn-primary">Посмотреть</a>
                         </div>
                     </div>

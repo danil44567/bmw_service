@@ -8,17 +8,9 @@ from django.forms.models import model_to_dict
 
 
 def index(request):
-    select_category = int(request.GET.get('cat', 0))
-    if select_category != 0:
-        services = models.Service.objects.filter(category=select_category).all()[:6]
-    else:
-        services = models.Service.objects.all()
-        
-    category = models.ServiceCategory.objects.all()
+    services = models.Service.objects.all()[:6]
     return render(request, 'main/index.html', {
         'services': services,
-        'categories': category,
-        'cat': select_category,
         'promo': models.Promo.objects.last()
     })
 
@@ -85,4 +77,10 @@ def service_all(request):
         'categories': category,
         'cat': select_category,
         'promo': models.Promo.objects.last()
+    })
+
+def service_detail(request, service_id):
+    service = get_object_or_404(models.Service, pk=service_id)
+    return render(request, 'main/service_detail.html', {
+        'service': service
     })

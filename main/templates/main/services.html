@@ -53,7 +53,15 @@
                                 </span>
                             </div>
                         </button>
-                        <button onclick="addCart(+'{{service.id}}')" class="btn btn-outline-primary col"
+                        <a href="{% url 'service_detail' service.id %}" class="btn btn-outline-warning col">
+                            <div class="d-flex align-items-center justify-content-center">
+                                Детализация
+                                <span class="material-icons">
+                                    article
+                                </span>
+                            </div>
+                        </a>
+                        <button onclick="addCart(+'{{service.id}}')" class="btn btn-outline-primary col-12"
                             id="add-cart-btn-{{service.id}}" data-bs-toggle="modal"
                             data-bs-target="#addService{{service.id}}">
                             <div class="d-flex align-items-center justify-content-center">
