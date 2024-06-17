@@ -12,8 +12,8 @@
                 <div class="d-flex align-items-center justify-content-center">
                     Все услуги
                     <span class="material-icons px-1">
-                directions_car
-            </span>
+                        directions_car
+                    </span>
                 </div>
             </a>
         </div>
@@ -59,7 +59,7 @@
             </div>
             <!-- Modal -->
             <div class="modal fade" id="info{{service.id}}" data-bs-keyboard="false" tabindex="-1"
-                 aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -74,8 +74,8 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
                             <button onclick="addCart(+'{{service.id}}')" data-bs-dismiss="modal"
-                                    class="btn btn-outline-primary col ms-1" data-bs-toggle="modal"
-                                    data-bs-target="#addService{{service.id}}" id="add-cart-btn-modal-{{service.id}}">
+                                class="btn btn-outline-primary col ms-1" data-bs-toggle="modal"
+                                data-bs-target="#addService{{service.id}}" id="add-cart-btn-modal-{{service.id}}">
                                 <div class="d-flex align-items-center justify-content-center">
                                     Записаться
                                     <span class="material-icons">
@@ -91,7 +91,7 @@
 
             <!-- AddModal -->
             <div class="modal fade" id="addService{{service.id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
-                 aria-hidden="true">
+                aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -104,7 +104,7 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
                             <button type="button" onclick="deleteCart(+'{{service.id}}')" class="btn btn-warning"
-                                    data-bs-dismiss="modal">Убрать
+                                data-bs-dismiss="modal">Убрать
                             </button>
                             <a href="{% url 'request' %}" class="btn btn-primary">Посмотреть</a>
                         </div>
@@ -146,6 +146,14 @@
     </div>
     {% endif %}
     <!-- АКЦИИ -->
+    <div class="pt-5 pb-2">
+        <h2>Мы на карте</h2>
+        <div>
+            <iframe
+                src="https://yandex.ru/map-widget/v1/?um=constructor%3A919b495a01a4121edb61a008aa8bb6d3199b9182af05b15181251d646ae62a2d&amp;source=constructor"
+                width="100%" height="400" frameborder="0"></iframe>
+        </div>
+    </div>
 </div>
 {% endblock %}
 

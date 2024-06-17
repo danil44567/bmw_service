@@ -24,7 +24,7 @@
           Автосервис BMW
         </h1>
       </a>
-      <div class="d-flex align-items-center" style="gap: 16px;">
+      <div class="d-flex align-items-center header__links" style="gap: 16px;">
         <p class="m-0">
           <a href="{% url 'services' %}"
             class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
@@ -37,7 +37,48 @@
             Акции
           </a>
         </p>
+        <p class="m-0">
+          <a href="#contacts"
+            class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
+            Контакты
+          </a>
+        </p>
         <a href="{% url 'request' %}" class="btn btn-outline-primary header__request">Запись на сервис</a>
+      </div>
+      <button class="btn btn-outline-primary header__burger" id="OpenMenu">
+        <span class="material-icons">
+          menu
+        </span>
+      </button>
+    </div>
+  </div>
+
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel" >
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasExampleLabel">Меню</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <div class="d-flex align-items-center" style="gap: 16px; flex-direction: column;">
+        <a href="{% url 'request' %}" class="btn btn-outline-primary">Запись на сервис</a>
+        <p class="m-0">
+          <a href="{% url 'services' %}"
+            class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
+            Услуги
+          </a>
+        </p>
+        <p class="m-0">
+          <a href="{% url 'promo' %}"
+            class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
+            Акции
+          </a>
+        </p>
+        <p class="m-0">
+          <a href="#contacts" id="BurgerContact"
+            class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
+            Контакты
+          </a>
+        </p>
       </div>
     </div>
   </div>
@@ -49,46 +90,62 @@
   </div>
 
   <div class="container-fluid footer">
-    <div class="container d-flex justify-content-between">
-      <div class="footer-content">
-        <div class="fs-3">
-          Навигация
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 col-12 d-flex align-items-center justify-content-center">
+          <a href="{% url 'index' %}" class="d-flex align-items-center" style="text-decoration: none; color: inherit;">
+            <img class="header__bmw-logo" src="/media/bmw.svg" alt="Логотип БМВ">
+            <h1>
+              Автосервис BMW
+            </h1>
+          </a>
         </div>
-        <p>
-          <a href="{% url 'services' %}"
-            class="link-info  link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
-            Наши услуги
-          </a>
-        </p>
-        <p>
-          <a href="{% url 'request' %}"
-            class="link-info  link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
-            Оставить заявку
-          </a>
-        </p>
-        <p>
-          <a href="{% url 'promo' %}"
-            class="link-info  link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
-            Наши акции
-          </a>
-        </p>
-      </div>
-      <div class="footer-content">
-        <div class="fs-3">
-          Контакты
+        <div class="footer-content col-md-3 col-6">
+          <div class="fs-3">
+            Навигация
+          </div>
+          <p>
+            <a href="{% url 'services' %}"
+              class="link-info  link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
+              Наши услуги
+            </a>
+          </p>
+          <p>
+            <a href="{% url 'request' %}"
+              class="link-info  link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
+              Оставить заявку
+            </a>
+          </p>
+          <p>
+            <a href="{% url 'promo' %}"
+              class="link-info  link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
+              Наши акции
+            </a>
+          </p>
         </div>
-        <p>
-          <a href="tel:+79220385103"
-            class="link-info link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
-            Позвонить нам
-          </a>
-        </p>
-        <p>
-          <a href="mailto:potompridumat@mail.ru"
-            class="link-info  link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
-            Написать нам
-          </a>
-        </p>
+        <div id="contacts" class="footer-content col-md-3 col-6">
+          <div class="fs-3">
+            Контакты
+          </div>
+          <p>
+            <a href="tel:+79220385103"
+              class="link-info link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
+              +7 922 038 - 51 - 03
+            </a>
+          </p>
+          <p>
+            <a href="mailto:pochta@mail.ru"
+              class="link-info  link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
+              pochta@mail.ru
+            </a>
+          </p>
+          <p>
+            <a target="_blank" href="https://yandex.ru/maps/-/CDv4EZ3C"
+              class="link-info  link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
+              Мы на карте
+            </a>
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -99,6 +156,10 @@
     background-color: #e0cffc;
     padding: 12px 16px;
     user-select: none;
+  }
+
+  .header__burger {
+    display: none;
   }
 
   .footer {
@@ -158,9 +219,22 @@
     justify-content: space-between;
   }
 
+
   @media (max-width: 1140px) {
     .my-grid {
       grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .header__links {
+      display: none !important;
+    }
+
+    .header__burger {
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   }
 
@@ -193,7 +267,22 @@
 </style>
 
 <script>
-  console.log('{{uuid|escapejs}}')
+document.addEventListener("DOMContentLoaded", function(){
+  var myOffcanvas = document.getElementById('offcanvasExample');
+  var bsOffcanvas = new bootstrap.Offcanvas(myOffcanvas);
+
+
+  document.getElementById("OpenMenu").addEventListener('click', function (e){
+    e.preventDefault();
+    e.stopPropagation();
+    bsOffcanvas.toggle();
+  });
+  document.getElementById("BurgerContact").addEventListener('click', function (e){
+    bsOffcanvas.hide();
+  });
+
+
+});
 </script>
 {% block 'script' %}
 
