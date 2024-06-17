@@ -41,7 +41,12 @@
         <div class="card">
             <img class="card-img-top" src="/media/{{service.cover}}">
             <div class="card-body">
-                <h5 class="card-title">{{service.name}}</h5>
+                <div class="d-flex justify-content-between">
+                    <h5 class="card-title">{{service.name}}</h5>
+                    <div>
+                        от {{service.price}} ₽
+                    </div>
+                </div>
                 <div class="container">
                     <div class="row card-actions">
                         <button type="button" class="btn btn-outline-info col" data-bs-toggle="modal"

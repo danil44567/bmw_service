@@ -19,6 +19,7 @@ class Service(models.Model):
     cover = models.ImageField(upload_to='сovers/', blank=False, verbose_name="Обложка")
     detail = models.TextField(blank=False, verbose_name="Детальное описание")
     dealer = models.CharField(max_length=255, blank=False, verbose_name="Ссылка на дилера")
+    price = models.IntegerField(max_length=7, blank=False, verbose_name="Стоимость услуги")
 
     class Meta:
         verbose_name = u'Услуга'
